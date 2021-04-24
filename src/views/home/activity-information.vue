@@ -15,61 +15,61 @@
   </div>
 </template>
 <script>
-  import Search from '@/components/search.vue'
-  import {
-    activityinfo,findActivity
-  } from '@/utils/apply.url';
-  export default {
-    name: 'activityInformation',
-    data() {
-      return {
-        activityInfoList: [],
-      };
-    },
-    computed: {},
-    watch: {},
-    components: {
-      Search
-    },
-    mounted() {
-      this.activityInfoList = [];
-      activityinfo({}, 'get').then(res => {
-        console.log(11)
-        if (res.length != 0) {
-          var obj = {};
-          for (let i = 0; i < res.length; i++) {
-            obj = {
-              title: res[i].title,
-              desc: res[i].descs,
-              image: res[i].image
-            };
-            this.activityInfoList.push(obj)
+import Search from '@/components/search.vue'
+import {
+  activityinfo, findActivity
+} from '@/utils/apply.url'
+export default {
+  name: 'activityInformation',
+  data () {
+    return {
+      activityInfoList: []
+    }
+  },
+  computed: {},
+  watch: {},
+  components: {
+    Search
+  },
+  mounted () {
+    this.activityInfoList = []
+    activityinfo({}, 'get').then(res => {
+      console.log(11)
+      if (res.length != 0) {
+        var obj = {}
+        for (let i = 0; i < res.length; i++) {
+          obj = {
+            title: res[i].title,
+            desc: res[i].descs,
+            image: res[i].image
           }
-          console.log(this.activityInfoList)
-        } else {
-          Toast(res.msg);
+          this.activityInfoList.push(obj)
         }
-      }).catch(err => {
-        console.log(22)
-        Toast('获取失败' || res.msg);
-      });
-    },
-    methods: {
-      search(searchWord) {
-        this.activityInfoList = [];
-        console.log(searchWord)
-        const params = {
-          searchWord: searchWord
-        }
-        findActivity(params, 'get').then(res => {
-          this.activityInfoList = res;
-        }).catch(err => {
-          Toast('获取失败' || res.msg);
-        });
+        console.log(this.activityInfoList)
+      } else {
+        Toast(res.msg)
       }
-    },
-    created() {}
-  };
+    }).catch(err => {
+      console.log(22)
+      Toast('获取失败' || res.msg)
+    })
+  },
+  methods: {
+    search (searchWord) {
+      this.activityInfoList = []
+      console.log(searchWord)
+      const params = {
+        searchWord: searchWord
+      }
+      findActivity(params, 'get').then(res => {
+        this.activityInfoList = res
+      }).catch(err => {
+        Toast('获取失败' || res.msg)
+      })
+    }
+  },
+  created () {}
+}
 </script>
 
 <style lang="scss" scope>
