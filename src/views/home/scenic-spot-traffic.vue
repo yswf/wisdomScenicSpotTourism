@@ -43,10 +43,6 @@
 </template>
 <script>
 import echarts from 'echarts'
-import {
-  Tab,
-  Tabs
-} from 'vant'
 import chartsOptions from './chartsOptions.js'
 export default {
   name: 'scenicSpotTraffic',

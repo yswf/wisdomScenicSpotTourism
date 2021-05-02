@@ -45,9 +45,6 @@
 </template>
 <script>
 import {
-  Field,
-  DatetimePicker,
-  Popup,
   Toast
 } from 'vant'
 import {

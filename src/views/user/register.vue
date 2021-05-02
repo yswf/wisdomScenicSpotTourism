@@ -17,9 +17,6 @@
 </template>
 <script>
 import {
-  Field,
-  Icon,
-  CellGroup,
   Toast
 } from 'vant'
 import {
@@ -154,7 +151,7 @@ export default {
     width: 100%;
     height: px2rem(380px);
     margin-bottom: px2rem(30px);
-    background: url("http://img4.imgtn.bdimg.com/it/u=1096318764,1694813758&fm=26&gp=0.jpg") no-repeat fixed top;
+    background: url("http://tourism.yswf.xyz/uploadFiles/file/swipe01.jpeg") no-repeat fixed top;
   }
 
   .login-box {

@@ -62,11 +62,6 @@ import {
   findTicketById
 } from '@/utils/apply.url'
 import {
-  Collapse,
-  CollapseItem,
-  Card,
-  Tag,
-  Button,
   Toast
 } from 'vant'
 export default {

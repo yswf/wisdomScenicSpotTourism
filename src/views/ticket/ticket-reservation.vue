@@ -79,14 +79,9 @@
 </template>
 <script>
 import {
-  Collapse,
-  CollapseItem,
-  DatetimePicker,
-  Popup,
+
   Dialog,
-  Toast,
-  CellGroup,
-  Field
+  Toast
 } from 'vant'
 import {
   buy,

@@ -34,12 +34,6 @@
 </template>
 
 <script>
-import {
-  NavBar,
-  Tabbar,
-  TabbarItem,
-  Icon
-} from 'vant'
 export default {
   name: 'app',
   data () {

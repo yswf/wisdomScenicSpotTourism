@@ -20,14 +20,6 @@
   </div>
 </template>
 <script>
-import {
-  Icon,
-  Swipe,
-  SwipeItem,
-  Grid,
-  GridItem,
-  Lazyload
-} from 'vant'
 export default {
   name: 'home',
   data () {

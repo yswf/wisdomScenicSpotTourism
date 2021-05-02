@@ -34,11 +34,6 @@
 </template>
 <script>
 import {
-  Field,
-  Popup,
-  Picker,
-  Cell,
-  CellGroup,
   Toast
 } from 'vant'
 import {

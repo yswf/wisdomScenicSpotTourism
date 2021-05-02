@@ -5,7 +5,7 @@ import store from './store.js'
 import '@/assets/scss/reset.scss'
 import '@/assets/iconfont/iconfont.css' // 引入字体样式
 import '@/assets/iconfont/iconfont.js' // 引入symbol样式
-// import './plugins/vant.js'
+import './plugins/vant.js'
 
 Vue.config.productionTip = false
 new Vue({

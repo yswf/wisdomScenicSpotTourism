@@ -13,10 +13,6 @@
     </div>
 </template>
 <script>
-import {
-  Cell,
-  CellGroup
-} from 'vant'
 export default {
   name: 'parkingDetail',
   data () {
