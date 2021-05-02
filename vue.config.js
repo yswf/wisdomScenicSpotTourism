@@ -17,36 +17,52 @@ module.exports = {
       filename: 'index.html',
       // 当使用 title 选项时，
       // template 中的 title 标签需要是 <title><%= htmlWebpackPlugin.options.title %></title>
-      title: '导游导览系统',
+      title: '红枫湖导游导览系统',
       // 在这个页面中包含的块，默认情况下会包含
       // 提取出来的通用 chunk 和 vendor chunk。
       // 块名，公共块名(非入口)
       chunks: ['chunk-vendors', 'chunk-common', 'apply']
     }
   },
-  // 请求代理
-  devServer: {// 跨域
-    proxy: {// 配置跨域处理 可以设置多个
-      '/MinstoneFileOnlinePreview': {// 预览文件接口
-        target: 'http://192.168.0.152:8012',
-        ws: true,
-        changeOrigin: true
-      }
-    }
-  },
+  // // 请求代理
+  // devServer: {// 跨域
+  //   proxy: {// 配置跨域处理 可以设置多个
+  //     '/MinstoneFileOnlinePreview': {// 预览文件接口
+  //       target: 'http://192.168.0.152:8012',
+  //       ws: true,
+  //       changeOrigin: true
+  //     }
+  //   }
+  // },
   // 生产环境下的sourceMap,生产环境是否生成 sourceMap 文件
   productionSourceMap: true,
   lintOnSave: false,
   chainWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
-      config
-        .externals({
-          vue: 'Vue',
-          'vue-router': 'VueRouter'
-        })
+      // 使用externals设置排除项
+      config.set('externals', {
+        vue: 'Vue',
+        'vue-router': 'VueRouter',
+        vant: 'vant',
+        axios: 'axios',
+        vuex: 'Vuex',
+        echarts: 'echarts'
+        // 'vue-baidu-map': 'vue-baidu-map'
+      })
+
+      // config.plugin('html').tap(args => {
+      //   // 添加参数isProd
+      //   args[0].isProd = true
+      //   return args
+      // })
     } else {
       // 为开发环境修改配置...
+      // config.plugin('html').tap(args => {
+      //   // 添加参数isProd
+      //   args[0].isProd = false
+      //   return args
+      // })
     }
   },
   css: {
