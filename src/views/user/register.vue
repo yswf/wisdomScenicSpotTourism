@@ -16,99 +16,98 @@
   </div>
 </template>
 <script>
-  import {
-    Field,
-    Icon,
-    CellGroup,
-    Toast
-  } from 'vant';
-  import {
-    isNoValue,
-    isPhone,
-    isPwdOrAccount
-  } from '@/utils/verify'
-  import {
-    register
-  } from '@/utils/apply.url';
-  export default {
-    name: 'register',
-    data() {
-      return {
-        userInfo: {
-          tel: '',
-          password: '',
-          surePassword: '',
-        }
-      };
-    },
-    computed: {
-
-    },
-    watch: {},
-    components: {
-
-    },
-    methods: {
-      // 点击已有账号
-      goLogin() {
-        this.$router.push({
-          path: '/login',
-        });
-      },
-      // 点击注册账号按钮
-      goRegister() {
-        if (isNoValue(this.userInfo.tel)) {
-          Toast('手机号码不能为空')
-          return
-        }
-        if (isNoValue(this.userInfo.password)) {
-          Toast('密码不能为空')
-          return
-        }
-        if (isNoValue(this.userInfo.surePassword)) {
-          Toast('确认密码不能为空')
-          return
-        }
-        if (!isPhone(this.userInfo.tel)) {
-          Toast('手机号码格式有误')
-          return
-        }
-        if (!isPwdOrAccount(this.userInfo.password)) {
-          Toast('密码格式有误' + '\n' + '正确格式:8~32位数字+英文')
-          return
-        }
-        if (!isPwdOrAccount(this.userInfo.surePassword)) {
-          Toast('确认密码格式有误' + '\n' + '正确格式:8~32位数字+英文')
-          return
-        }
-        if (this.userInfo.surePassword != this.userInfo.password) {
-          Toast('两次输入的密码不一致')
-          return
-        }
-        var params = {
-          tel: this.userInfo.tel,
-          password: this.userInfo.password
-        }
-        console.log(params)
-        register(params, 'post').then(res => {
-          if (res.code == '200') {
-            Toast(res.msg);
-            this.$router.push({
-              path: '/userCenter',
-            });
-          } else {
-            Toast(res.msg);
-          }
-        }).catch(err => {
-          Toast(res.msg);
-        });
-
+import {
+  Field,
+  Icon,
+  CellGroup,
+  Toast
+} from 'vant'
+import {
+  isNoValue,
+  isPhone,
+  isPwdOrAccount
+} from '@/utils/verify'
+import {
+  register
+} from '@/utils/apply.url'
+export default {
+  name: 'register',
+  data () {
+    return {
+      userInfo: {
+        tel: '',
+        password: '',
+        surePassword: ''
       }
-    },
-    created() {
-
     }
-  };
+  },
+  computed: {
+
+  },
+  watch: {},
+  components: {
+
+  },
+  methods: {
+    // 点击已有账号
+    goLogin () {
+      this.$router.push({
+        path: '/login'
+      })
+    },
+    // 点击注册账号按钮
+    goRegister () {
+      if (isNoValue(this.userInfo.tel)) {
+        Toast('手机号码不能为空')
+        return
+      }
+      if (isNoValue(this.userInfo.password)) {
+        Toast('密码不能为空')
+        return
+      }
+      if (isNoValue(this.userInfo.surePassword)) {
+        Toast('确认密码不能为空')
+        return
+      }
+      if (!isPhone(this.userInfo.tel)) {
+        Toast('手机号码格式有误')
+        return
+      }
+      if (!isPwdOrAccount(this.userInfo.password)) {
+        Toast('密码格式有误' + '\n' + '正确格式:8~32位数字+英文')
+        return
+      }
+      if (!isPwdOrAccount(this.userInfo.surePassword)) {
+        Toast('确认密码格式有误' + '\n' + '正确格式:8~32位数字+英文')
+        return
+      }
+      if (this.userInfo.surePassword != this.userInfo.password) {
+        Toast('两次输入的密码不一致')
+        return
+      }
+      var params = {
+        tel: this.userInfo.tel,
+        password: this.userInfo.password
+      }
+      console.log(params)
+      register(params, 'post').then(res => {
+        if (res.code == '200') {
+          Toast(res.msg)
+          this.$router.push({
+            path: '/userCenter'
+          })
+        } else {
+          Toast(res.msg)
+        }
+      }).catch(err => {
+        Toast(res.msg)
+      })
+    }
+  },
+  created () {
+
+  }
+}
 </script>
 
 <style lang="scss" scope>

@@ -9,24 +9,24 @@
     </div>
 </template>
 <script>
-    export default {
-        name: 'search',
-        data() {
-            return {
-                isWechat: this.$store.state.isWechat,
-                searchWord: '',
-            };
-        },
-        methods: {
-            /**
+export default {
+  name: 'search',
+  data () {
+    return {
+      isWechat: this.$store.state.isWechat,
+      searchWord: ''
+    }
+  },
+  methods: {
+    /**
              * 点击软键盘的搜索按钮后
              */
-            search() {
-                this.$refs.input1.blur();
-                this.$emit('search', this.searchWord);
-            },
-        },
-    };
+    search () {
+      this.$refs.input1.blur()
+      this.$emit('search', this.searchWord)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scope>
@@ -62,7 +62,6 @@
             width: px2rem(48px);
             background: url("../assets/images/clear.png") no-repeat px2rem(10px) center;
         }
-
 
         ::-webkit-input-placeholder {
             /*Webkit browsers 谷歌*/

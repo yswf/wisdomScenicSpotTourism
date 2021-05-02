@@ -55,169 +55,168 @@
     </div>
 </template>
 <script>
-    import {
-        userCenter,
-        parkingSelect,
-        buyList,
-        findTicketById
-    } from '@/utils/apply.url';
-    import {
-        Collapse,
-        CollapseItem,
-        Card,
-        Tag,
-        Button,
-        Toast
-    } from 'vant';
-    export default {
-        name: 'userCenter',
-        data() {
-            return {
-                user: { // 用户信息
-                    nickName: '',
-                    tel: '',
-                    userType: 0,
-                },
-                userTel: '',
-                isLogin: true,
-                activeNames: '',
-                ticketList: [],
-                parkingList: [],
-            };
-        },
-        computed: {
-            telShow() {
-                return this.user.tel.substr(0, 3) + "****" + this.user.tel.substr(7);
+import {
+  userCenter,
+  parkingSelect,
+  buyList,
+  findTicketById
+} from '@/utils/apply.url'
+import {
+  Collapse,
+  CollapseItem,
+  Card,
+  Tag,
+  Button,
+  Toast
+} from 'vant'
+export default {
+  name: 'userCenter',
+  data () {
+    return {
+      user: { // 用户信息
+        nickName: '',
+        tel: '',
+        userType: 0
+      },
+      userTel: '',
+      isLogin: true,
+      activeNames: '',
+      ticketList: [],
+      parkingList: []
+    }
+  },
+  computed: {
+    telShow () {
+      return this.user.tel.substr(0, 3) + '****' + this.user.tel.substr(7)
+    }
+  },
+  mounted () {
+    this.userTel = sessionStorage.getItem('userTel')
+    if (this.userTel) {
+      this.isLogin = true
+      userCenter({
+        tel: this.userTel
+      }, 'get').then(res => {
+        this.user = {
+          nickName: res.nickName,
+          tel: res.tel,
+          userType: res.userType
+        }
+        this.getParkingList()
+        this.getTicketList()
+      }).catch(err => {
+        Toast('获取个人信息失败' || res.msg)
+      })
+    } else {
+      this.isLogin = false
+    }
+  },
+  methods: {
+    timestampToTime (timestamp) {
+      var date = new Date(timestamp)
+      var Y = date.getFullYear() + '-'
+      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+      var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' '
+      return Y + M + D
+    },
+    getParkingList () {
+      parkingSelect({
+        tel: this.userTel
+      }, 'get').then(res => {
+        if (res.length != 0) {
+          var obj = {}
+          for (let i = 0; i < res.length; i++) {
+            obj = {
+              carNum: res[i].carNum,
+              parkingStartTime: this.timestampToTime(res[i].startTime),
+              parkingEndTime: this.timestampToTime(res[i].endTime),
+              area: res[i].area,
+              num: res[i].num,
+              price: res[i].price + '.00',
+              thumb: res[i].thumb,
+              status: res[i].status
             }
-        },
-        mounted() {
-            this.userTel = sessionStorage.getItem('userTel');
-            if (this.userTel) {
-                this.isLogin = true;
-                userCenter({
-                    tel: this.userTel
-                }, 'get').then(res => {
-                    this.user = {
-                        nickName: res.nickName,
-                        tel: res.tel,
-                        userType: res.userType,
-                    }
-                    this.getParkingList();
-                    this.getTicketList();
-
-                }).catch(err => {
-                    Toast('获取个人信息失败' || res.msg);
-                });
-            } else {
-                this.isLogin = false;
+            this.parkingList.push(obj)
+          }
+          console.log(this.parkingList)
+        }
+      }).catch(err => {
+        Toast('获取我的停车失败' || res.msg)
+      })
+    },
+    getTicketList () {
+      buyList({
+        tel: this.userTel
+      }, 'get').then(res => {
+        if (res.length != 0) {
+          for (let i = 0; i < res.length; i++) {
+            var obj = {}
+            obj = {
+              selectPlayDate: this.timestampToTime(res[i].selectPlayDate),
+              number: res[i].number,
+              ticketId: res[i].ticketId,
+              ticketPay: res[i].ticketPay + '.00',
+              status: res[i].status,
+              image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590039758079&di=8dc3d04fcc968026646efbf43df0a655&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F60318eb10e8b6ecf4b7ca1eee0bed8749d30b52621857-3pjuGn_fw658'
             }
-        },
-        methods: {
-            timestampToTime(timestamp) {
-                var date = new Date(timestamp);
-                var Y = date.getFullYear() + '-';
-                var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-                var D = (date.getDate() <10 ? '0' +date.getDate() :date.getDate() )+ ' ';
-                return Y + M + D;
-            },
-            getParkingList() {
-                parkingSelect({
-                    tel: this.userTel
-                }, 'get').then(res => {
-                    if (res.length != 0) {
-                        var obj = {};
-                        for (let i = 0; i < res.length; i++) {
-                            obj = {
-                                carNum: res[i].carNum,
-                                parkingStartTime: this.timestampToTime(res[i].startTime),
-                                parkingEndTime: this.timestampToTime(res[i].endTime),
-                                area: res[i].area,
-                                num: res[i].num,
-                                price: res[i].price + '.00',
-                                thumb: res[i].thumb,
-                                status: res[i].status
-                            };
-                            this.parkingList.push(obj)
-                        }
-                        console.log(this.parkingList)
-                    }
-                }).catch(err => {
-                    Toast('获取我的停车失败' || res.msg);
-                });
-            },
-            getTicketList() {
-                buyList({
-                    tel: this.userTel
-                }, 'get').then(res => {
-                    if (res.length != 0) {
-                        for (let i = 0; i < res.length; i++) {
-                            var obj = {};
-                            obj = {
-                                selectPlayDate: this.timestampToTime(res[i].selectPlayDate),
-                                number: res[i].number,
-                                ticketId: res[i].ticketId,
-                                ticketPay: res[i].ticketPay + '.00',
-                                status: res[i].status,
-                                image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590039758079&di=8dc3d04fcc968026646efbf43df0a655&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F60318eb10e8b6ecf4b7ca1eee0bed8749d30b52621857-3pjuGn_fw658'
-                            };
-                            this.ticketList.push(obj)
-                        }
-                        this.getTicketDetail();
-                    }
-                }).catch(err => {
-                    Toast('获取我的门票失败' || res.msg);
-                });
-            },
-            getTicketDetail() {
-                this.ticketList.forEach((item, index) => {
-                    findTicketById({
-                        ticketId: item.ticketId
-                    }, 'get').then(result => {
-                        this.ticketList[index].title = result[0].title,
-                            this.ticketList[index].descs = result[0].descs
-                    }).catch(error => {
-                        Toast('获取电子门票信息失败');
-                    })
-                });
-            },
-            showTicketDetail(type, item) {
-                console.log("点击跳转")
-                console.log(item)
-                if (item.status != '1') return;
-                if (type == 'ticket') {
-                    this.$router.push({
-                        path: '/userCenter/ticketDetail',
-                        query: {
-                            item: item
-                        }
-                    });
-                } else {
-                    this.$router.push({
-                        path: '/userCenter/parkingDetail',
-                        query: {
-                            carNum: item.carNum,
-                            parkingStartTime: this.timestampToTime(item.parkingStartTime),
-                            parkingEndTime: this.timestampToTime(item.parkingEndTime),
-                            area: item.area,
-                            num: item.num,
-                            price: item.price
-                        }
-                    });
-                }
-            },
-            goLogin() {
-                this.$router.push({
-                    path: '/login',
-                });
-            },
-            loginOut() {
-                sessionStorage.removeItem('userTel')
-                this.$router.push({
-                    path: '/login',
-                });
-            }
-        },
-    };
+            this.ticketList.push(obj)
+          }
+          this.getTicketDetail()
+        }
+      }).catch(err => {
+        Toast('获取我的门票失败' || res.msg)
+      })
+    },
+    getTicketDetail () {
+      this.ticketList.forEach((item, index) => {
+        findTicketById({
+          ticketId: item.ticketId
+        }, 'get').then(result => {
+          this.ticketList[index].title = result[0].title,
+          this.ticketList[index].descs = result[0].descs
+        }).catch(error => {
+          Toast('获取电子门票信息失败')
+        })
+      })
+    },
+    showTicketDetail (type, item) {
+      console.log('点击跳转')
+      console.log(item)
+      if (item.status != '1') return
+      if (type == 'ticket') {
+        this.$router.push({
+          path: '/userCenter/ticketDetail',
+          query: {
+            item: item
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/userCenter/parkingDetail',
+          query: {
+            carNum: item.carNum,
+            parkingStartTime: this.timestampToTime(item.parkingStartTime),
+            parkingEndTime: this.timestampToTime(item.parkingEndTime),
+            area: item.area,
+            num: item.num,
+            price: item.price
+          }
+        })
+      }
+    },
+    goLogin () {
+      this.$router.push({
+        path: '/login'
+      })
+    },
+    loginOut () {
+      sessionStorage.removeItem('userTel')
+      this.$router.push({
+        path: '/login'
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scope>
@@ -361,7 +360,6 @@
             }
         }
     }
-
 
     .logo {
         height: px2rem(100px);

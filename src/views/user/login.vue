@@ -14,86 +14,86 @@
   </div>
 </template>
 <script>
-  import {
-    Field,
-    Icon,
-    CellGroup,
-    Toast
-  } from 'vant';
-  import {
-    isNoValue,
-    isPhone,
-    isPwdOrAccount
-  } from '@/utils/verify'
-  import {
-    login
-  } from '@/utils/apply.url';
-  export default {
-    name: 'login',
-    data() {
-      return {
-        userInfo: {
-          tel: '',
-          password: '',
-          redirectUrl: '',
-        }
-      };
-    },
-    methods: {
-      // 点击没有账号
-      goRegister() {
-        this.$router.push({
-          path: '/register',
-        });
-      },
-      // 点击登录按钮
-      goLogin() {
-        if (isNoValue(this.userInfo.tel)) {
-          Toast('手机号码不能为空')
-          return
-        }
-        if (isNoValue(this.userInfo.password)) {
-          Toast('密码不能为空')
-          return
-        }
-        if (!isPhone(this.userInfo.tel)) {
-          Toast('手机号码格式有误')
-          return
-        }
-        if (!isPwdOrAccount(this.userInfo.password)) {
-          Toast('密码格式有误' + '\n' + '正确格式:8~32位数字+英文')
-          return
-        }
-        var params = {
-          tel: this.userInfo.tel,
-          password: this.userInfo.password
-        }
-        login(params, 'post').then(res => {
-          if (res.code == '200') {
-            sessionStorage.setItem('userTel', this.userInfo.tel);
-            Toast(res.msg);
-            console.log(this.$route.query.redirect)
-            if (this.$route.query.redirect) {
-              let redirect = this.$route.query.redirect;
-              this.$router.push(redirect);
-            } else {
-              this.$router.push({
-                path: '/userCenter',
-              });
-            }          
-          } else if (res.code == '400') {
-            Toast(res.msg);
-          } else {
-            Toast('该账户未注册，请前往注册');
-          }
-        }).catch(err => {
-          Toast('登录失败' || res.msg);
-        });
+import {
+  Field,
+  Icon,
+  CellGroup,
+  Toast
+} from 'vant'
+import {
+  isNoValue,
+  isPhone,
+  isPwdOrAccount
+} from '@/utils/verify'
+import {
+  login
+} from '@/utils/apply.url'
+export default {
+  name: 'login',
+  data () {
+    return {
+      userInfo: {
+        tel: '',
+        password: '',
+        redirectUrl: ''
       }
-
+    }
+  },
+  methods: {
+    // 点击没有账号
+    goRegister () {
+      this.$router.push({
+        path: '/register'
+      })
     },
+    // 点击登录按钮
+    goLogin () {
+      if (isNoValue(this.userInfo.tel)) {
+        Toast('手机号码不能为空')
+        return
+      }
+      if (isNoValue(this.userInfo.password)) {
+        Toast('密码不能为空')
+        return
+      }
+      if (!isPhone(this.userInfo.tel)) {
+        Toast('手机号码格式有误')
+        return
+      }
+      if (!isPwdOrAccount(this.userInfo.password)) {
+        Toast('密码格式有误' + '\n' + '正确格式:8~32位数字+英文')
+        return
+      }
+      var params = {
+        tel: this.userInfo.tel,
+        password: this.userInfo.password
+      }
+      login(params, 'post').then(res => {
+        if (res.code == '200') {
+          sessionStorage.setItem('userTel', this.userInfo.tel)
+          Toast(res.msg)
+          console.log(this.$route.query.redirect)
+          if (this.$route.query.redirect) {
+            const redirect = this.$route.query.redirect
+            this.$router.push(redirect)
+          } else {
+            this.$router.push({
+              path: '/userCenter'
+            })
+          }
+        } else if (res.code == '400') {
+          Toast(res.msg)
+        } else {
+          Toast('该账户未注册，请前往注册')
+        }
+      }).catch(err => {
+        Toast('登录失败' || res.msg)
+      })
+    }
 
-  };
+  }
+
+}
 </script>
 
 <style lang="scss" scope>

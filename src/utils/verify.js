@@ -39,7 +39,6 @@ export function isPwdOrAccount (id) {
   return false
 }
 
-
 // 验证手机号
 export function isPhone (value) {
   const reg = /^1[34578]\d{9}$/

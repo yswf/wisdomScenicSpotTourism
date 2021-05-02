@@ -33,9 +33,10 @@ export default {
   data () {
     return {
       images: [
-        'https://yswf.xyz/usr/uploads/2020/05/1924359554.png',
-        'https://yswf.xyz/usr/uploads/2020/05/2863237582.png',
-        'https://yswf.xyz/usr/uploads/2020/05/3944198772.png'
+        'http://tourism.yswf.xyz/uploadFiles/file/swipe01.jpeg',
+        'http://tourism.yswf.xyz/uploadFiles/file/swipe02.jpeg',
+        'http://tourism.yswf.xyz/uploadFiles/file/swipe03.jpeg',
+        'http://tourism.yswf.xyz/uploadFiles/file/swipe04.jpeg'
       ],
       grids: [{
         icon: 'icon-jingqu',

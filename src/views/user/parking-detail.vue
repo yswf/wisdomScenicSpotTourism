@@ -13,31 +13,30 @@
     </div>
 </template>
 <script>
-    import {
-        Cell,
-        CellGroup
-    } from 'vant';
-    export default {
-        name: 'parkingDetail',
-        data() {
-            return {
-                parking: {}
-            };
-        },
+import {
+  Cell,
+  CellGroup
+} from 'vant'
+export default {
+  name: 'parkingDetail',
+  data () {
+    return {
+      parking: {}
+    }
+  },
 
-        methods: {
+  methods: {
 
-
-        },
-        mounted() {
-            this.parking = {
-                carNum: this.$route.query.carNum,
-                date:this.$route.query.parkingStartTime+'~'+this.$route.query.parkingEndTime,
-                parkingNum:this.$route.query.area+'区'+this.$route.query.num,
-                price:this.$route.query.price
-            }
-        }
-    };
+  },
+  mounted () {
+    this.parking = {
+      carNum: this.$route.query.carNum,
+      date: this.$route.query.parkingStartTime + '~' + this.$route.query.parkingEndTime,
+      parkingNum: this.$route.query.area + '区' + this.$route.query.num,
+      price: this.$route.query.price
+    }
+  }
+}
 </script>
 
 <style lang="scss" scope>

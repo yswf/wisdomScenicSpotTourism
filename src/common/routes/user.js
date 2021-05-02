@@ -55,7 +55,7 @@ const logins = [
       isRequireAuth: true,
       title: '停车详情' //  网页title
     }
-  },
+  }
 ]
 
 export default logins

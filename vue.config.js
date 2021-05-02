@@ -24,16 +24,6 @@ module.exports = {
       chunks: ['chunk-vendors', 'chunk-common', 'apply']
     }
   },
-  // // 请求代理
-  // devServer: {// 跨域
-  //   proxy: {// 配置跨域处理 可以设置多个
-  //     '/MinstoneFileOnlinePreview': {// 预览文件接口
-  //       target: 'http://192.168.0.152:8012',
-  //       ws: true,
-  //       changeOrigin: true
-  //     }
-  //   }
-  // },
   // 生产环境下的sourceMap,生产环境是否生成 sourceMap 文件
   productionSourceMap: true,
   lintOnSave: false,
@@ -44,7 +34,7 @@ module.exports = {
       config.set('externals', {
         vue: 'Vue',
         'vue-router': 'VueRouter',
-        vant: 'vant',
+        // vant: 'vant',
         axios: 'axios',
         vuex: 'Vuex',
         echarts: 'echarts'

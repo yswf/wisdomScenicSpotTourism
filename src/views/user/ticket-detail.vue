@@ -15,48 +15,46 @@
     </div>
 </template>
 <script>
-    import {
-        Cell,
-        CellGroup
-    } from 'vant';
-    export default {
-        name: 'ticketDetail',
-        data() {
-            return {
-                item: {}
-            };
-        },
-        filters: {
-            ticketTypeFilter(type) {
-                let ticketTypeJson = {
-                    '0': '普通票',
-                    '1': '儿童票',
-                    '2': '学生票',
-                    '3': '老人票',
-                    '4': '残疾票',
-                }
-                return ticketTypeJson[type] || '无';
+import {
+  Cell,
+  CellGroup
+} from 'vant'
+export default {
+  name: 'ticketDetail',
+  data () {
+    return {
+      item: {}
+    }
+  },
+  filters: {
+    ticketTypeFilter (type) {
+      const ticketTypeJson = {
+        0: '普通票',
+        1: '儿童票',
+        2: '学生票',
+        3: '老人票',
+        4: '残疾票'
+      }
+      return ticketTypeJson[type] || '无'
+    }
+  },
+  computed: {
 
-            }
-        },
-        computed: {
+  },
+  watch: {
 
-        },
-        watch: {
+  },
+  components: {
 
-        },
-        components: {
+  },
+  methods: {
 
-        },
-        methods: {
-
-
-        },
-        mounted() {
-            this.item = this.$route.query.item;
-            console.log(this.item)
-        }
-    };
+  },
+  mounted () {
+    this.item = this.$route.query.item
+    console.log(this.item)
+  }
+}
 </script>
 
 <style lang="scss" scope>
@@ -84,7 +82,7 @@
 
         }
         .qrCodeImg{
-           height:px2rem(400px); 
+           height:px2rem(400px);
            width: px2rem(400px);
            margin-top: px2rem(40px);
            border:1px solid green;

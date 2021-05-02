@@ -5,7 +5,6 @@ import buyTicket from './buyTicket'
 // 个人中心模块 ==================
 import user from './user'
 
-
 export {
   user,
   introduction,
