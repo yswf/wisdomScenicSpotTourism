@@ -4,8 +4,8 @@
     <div class="activityInfoList">
       <div class="activity-info" v-for="activityInfo in activityInfoList">
         <div class="activity-info-detail">
-          <span class="activity-info-title">{{activityInfo.title}}</span>
-          <div class="activity-info-desc">{{activityInfo.desc}}</div>
+          <span class="activity-info-title">{{ activityInfo.title }}</span>
+          <div class="activity-info-desc">{{ activityInfo.desc }}</div>
         </div>
         <div>
           <img class="activity-info-image" :src="activityInfo.image" />
@@ -68,43 +68,42 @@ export default {
       })
     }
   },
-  created () {}
+  created () { }
 }
 </script>
 
 <style lang="scss" scope>
-  .contain {
-    width: 100%;
-    height: 100%;
-  }
+.contain {
+  width: 100%;
+  height: 100%;
+}
 
-  .activityInfoList {
-    margin-top: px2rem(100px);
-  }
+.activityInfoList {
+  margin-top: px2rem(100px);
+}
 
-  .activity-info {
-    background-color: #fff;
-    padding: px2rem(20px);
-    border-bottom: px2rem(1px) solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.activity-info {
+  background-color: #fff;
+  padding: px2rem(20px);
+  border-bottom: px2rem(1px) solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .activity-info-image {
-    width: px2rem(220px);
-    height: px2rem(180px);
-  }
+.activity-info-image {
+  width: px2rem(220px);
+  height: px2rem(180px);
+}
 
-  .activity-info-title {
-    font-size: px2rem(36px);
-    color: #3D11EE;
-    font-weight: 600;
+.activity-info-title {
+  font-size: px2rem(36px);
+  color: #3d11ee;
+  font-weight: 600;
+}
 
-  }
-
-  .activity-info-desc {
-    color: rgba(114, 116, 117, 1);
-    margin-top: px2rem(30px);
-  }
+.activity-info-desc {
+  color: rgba(114, 116, 117, 1);
+  margin-top: px2rem(30px);
+}
 </style>

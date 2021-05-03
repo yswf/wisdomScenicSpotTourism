@@ -38,7 +38,6 @@ module.exports = {
         axios: 'axios',
         vuex: 'Vuex',
         echarts: 'echarts'
-        // 'vue-baidu-map': 'vue-baidu-map'
       })
 
       // config.plugin('html').tap(args => {

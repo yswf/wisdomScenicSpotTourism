@@ -5,15 +5,16 @@
         <span class="icon iconfont iconfont-title">&#xe60c;</span>
         <span class="ticket-title">购票类型</span>
       </div>
-      <span class="ticket-select">{{ticketInfo.selectTicketType}}</span>
+      <span class="ticket-select">{{ ticketInfo.selectTicketType }}</span>
     </div>
     <van-collapse v-model="ticketType" accordion>
       <van-collapse-item v-for="item in ticketList" :name="item.id">
-        <div slot="title">{{item.title}}
-          <span class="ticket-price">￥{{item.price}}</span>
+        <div slot="title">
+          {{ item.title }}
+          <span class="ticket-price">￥{{ item.price }}</span>
         </div>
         <div class="ticket-detail">
-          <span class="ticket-desc">{{item.desc}}</span>
+          <span class="ticket-desc">{{ item.desc }}</span>
           <span class="ticket-select-button" @click="select(item)">确定</span>
         </div>
       </van-collapse-item>
@@ -24,10 +25,15 @@
         <span class="icon iconfont iconfont-title">&#xe60a;</span>
         <span class="ticket-title">游玩日期</span>
       </div>
-      <span class="ticket-select" v-if="ticketInfo.selectPlayDate">{{ticketInfo.selectPlayDate}}</span>
-      <span class="icon iconfont ticket-select" v-if="!ticketInfo.selectPlayDate"
-        style="margin-right: 25px">&#xe62c;</span>
-
+      <span class="ticket-select" v-if="ticketInfo.selectPlayDate">{{
+        ticketInfo.selectPlayDate
+      }}</span>
+      <span
+        class="icon iconfont ticket-select"
+        v-if="!ticketInfo.selectPlayDate"
+        style="margin-right: 25px"
+        >&#xe62c;</span
+      >
     </div>
 
     <div class="ticket-line">
@@ -35,25 +41,31 @@
         <span class="icon iconfont iconfont-title">&#xe611;</span>
         <span class="ticket-title">游玩人数</span>
       </div>
-      <span class="ticket-select">{{touristList.length}}</span>
+      <span class="ticket-select">{{ touristList.length }}</span>
     </div>
     <div class="tourist-list">
       <div class="tourist-info" v-for="tourist in touristList">
-        <div style="display: flex;">
-          <div @click="editTourist(tourist)"><span class="icon iconfont operator">&#xe626;</span></div>
+        <div style="display: flex">
+          <div @click="editTourist(tourist)">
+            <span class="icon iconfont operator">&#xe626;</span>
+          </div>
           <div class="tourist-detail">
             <div>
-              <span class="tourist-name">{{tourist.name}}</span>
+              <span class="tourist-name">{{ tourist.name }}</span>
               <!-- <span class="tourist-tag" v-if="tourist.ticketType==0">普通票</span>
               <span class="tourist-tag" v-if="tourist.ticketType==1">儿童票</span>
               <span class="tourist-tag" v-if="tourist.ticketType==2">学生票</span>
               <span class="tourist-tag" v-if="tourist.ticketType==3">老人票</span>
               <span class="tourist-tag" v-if="tourist.ticketType==4">残疾票</span> -->
             </div>
-            <div class="tourist-idCard">{{tourist.idCard| idCardFilter}}</div>
+            <div class="tourist-idCard">
+              {{ tourist.idCard | idCardFilter }}
+            </div>
           </div>
         </div>
-        <span class="icon iconfont delete" @click="deleteTourist(tourist)">&#xe62d;</span>
+        <span class="icon iconfont delete" @click="deleteTourist(tourist)"
+          >&#xe62d;</span
+        >
       </div>
       <div class="addTourist" @click="addTourist">
         <span class="icon iconfont icon-jia"></span>
@@ -61,17 +73,38 @@
       </div>
     </div>
 
-    <div class="pay-button" @click="pay">￥{{ticketPay}}/确认支付</div>
+    <div class="pay-button" @click="pay">￥{{ ticketPay }}/确认支付</div>
 
     <van-popup v-model="showSelectPopup" position="bottom">
-      <van-datetime-picker class="datetime-picker" @confirm="confirmSelect" @cancel="cancelSelect" @change="getValues"
-        v-model="currentDate" :title="title" :type="type" :min-date="minDate" :max-date="maxDate" />
+      <van-datetime-picker
+        class="datetime-picker"
+        @confirm="confirmSelect"
+        @cancel="cancelSelect"
+        @change="getValues"
+        v-model="currentDate"
+        :title="title"
+        :type="type"
+        :min-date="minDate"
+        :max-date="maxDate"
+      />
     </van-popup>
 
     <van-popup v-model="isEdit">
       <van-cell-group>
-        <van-field class="cellEdit" v-model="name" clearable label="姓名" placeholder="请输入姓名" />
-        <van-field class="cellEdit" v-model="idCard" clearable label="证件号码" placeholder="请输入证件号码" />
+        <van-field
+          class="cellEdit"
+          v-model="name"
+          clearable
+          label="姓名"
+          placeholder="请输入姓名"
+        />
+        <van-field
+          class="cellEdit"
+          v-model="idCard"
+          clearable
+          label="证件号码"
+          placeholder="请输入证件号码"
+        />
       </van-cell-group>
       <div class="confirm-button" @click="editTourists">确定</div>
     </van-popup>
@@ -251,7 +284,7 @@ export default {
             index++
           }
         })
-      }).catch(() => {})
+      }).catch(() => { })
     },
     // 点击确认支付按钮
     pay () {
@@ -281,6 +314,9 @@ export default {
       buy(params, 'post').then(res => {
         if (res.code == '200') { // 购票成功
           Toast('购票成功，可前往个人中心查看购票信息')
+          this.$router.push({
+            path: '/userCenter'
+          })
         } else { // 该车对应时间段已购票
           Toast('您已预约对应时间段')
         }
@@ -322,170 +358,170 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  /* 电子门票类型 */
-  .ticket-line {
-    width: 100%;
-    padding: px2rem(20px);
-    margin-right: px2rem(50px);
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    justify-content: space-between;
+/* 电子门票类型 */
+.ticket-line {
+  width: 100%;
+  padding: px2rem(20px);
+  margin-right: px2rem(50px);
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+
+  .iconfont-title {
+    color: #3d11ee;
+    font-size: px2rem(40px);
+  }
+
+  .ticket-title {
+    color: #3d11ee;
+    font-size: px2rem(36px);
+    margin-left: px2rem(20px);
+  }
+
+  .ticket-select {
+    color: #ccc;
+    margin-right: px2rem(40px);
+  }
+}
+
+.van-cell {
+  .van-cell__title {
+    font-size: px2rem(34px);
+  }
+
+  .ticket-price {
+    border: px2rem(1px) solid #ff3300;
+    color: #ff3300;
+    font-size: px2rem(24px);
+    border-radius: px2rem(5px);
+    padding: 0 px2rem(10px);
+    margin-left: px2rem(20px);
+  }
+}
+
+.ticket-detail {
+  border-bottom: px2rem(1px) solid #ddd;
+  font-size: px2rem(30px);
+  padding: px2rem(20px) 0;
+  margin-top: px2rem(-50px);
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticket-desc {
+  width: px2rem(550px);
+}
+
+.ticket-select-button {
+  background-color: #00b300;
+  color: #fff;
+  font-size: px2rem(30px);
+  border-radius: px2rem(10px);
+  padding: px2rem(10px) px2rem(20px);
+  position: absolute;
+  top: px2rem(70px);
+  right: 0;
+}
+
+.tourist-list {
+  margin-bottom: px2rem(20px);
+  padding: px2rem(20px) 0 px2rem(10px) 0;
+  background-color: #eee;
+
+  .tourist-info {
     background-color: #fff;
-
-    .iconfont-title {
-      color: #3D11EE;
-      font-size: px2rem(40px);
-    }
-
-    .ticket-title {
-      color: #3D11EE;
-      font-size: px2rem(36px);
-      margin-left: px2rem(20px);
-    }
-
-    .ticket-select {
-      color: #ccc;
-      margin-right: px2rem(40px);
-    }
-  }
-
-  .van-cell {
-    .van-cell__title {
-      font-size: px2rem(34px);
-    }
-
-    .ticket-price {
-      border: px2rem(1px) solid #ff3300;
-      color: #ff3300;
-      font-size: px2rem(24px);
-      border-radius: px2rem(5px);
-      padding: 0 px2rem(10px);
-      margin-left: px2rem(20px);
-    }
-  }
-
-  .ticket-detail {
-    border-bottom: px2rem(1px) solid #ddd;
-    font-size: px2rem(30px);
-    padding: px2rem(20px) 0;
-    margin-top: px2rem(-50px);
+    padding: px2rem(20px);
+    margin: 0 px2rem(20px) px2rem(20px) px2rem(20px);
+    border-radius: px2rem(10px);
     display: flex;
     justify-content: space-between;
-  }
+    text-align: center;
+    align-items: center;
 
-  .ticket-desc {
-    width: px2rem(550px);
-  }
+    .operator {
+      font-size: px2rem(40px);
+      color: green;
+    }
 
-  .ticket-select-button {
-    background-color: #00b300;
-    color: #fff;
-    font-size: px2rem(30px);
-    border-radius: px2rem(10px);
-    padding: px2rem(10px) px2rem(20px);
-    position: absolute;
-    top: px2rem(70px);
-    right: 0;
-  }
+    .delete {
+      font-size: px2rem(40px);
+      color: red;
+    }
 
-  .tourist-list {
-    margin-bottom: px2rem(20px);
-    padding: px2rem(20px) 0 px2rem(10px) 0;
-    background-color: #eee;
-
-    .tourist-info {
-      background-color: #fff;
-      padding: px2rem(20px);
-      margin: 0 px2rem(20px) px2rem(20px) px2rem(20px);
-      border-radius: px2rem(10px);
+    .tourist-detail {
+      margin-left: px2rem(20px);
       display: flex;
-      justify-content: space-between;
-      text-align: center;
+      flex-direction: column;
       align-items: center;
+      align-items: flex-start;
+      text-align: left;
 
-      .operator {
-        font-size: px2rem(40px);
-        color: green;
-      }
-
-      .delete {
-        font-size: px2rem(40px);
-        color: red;
-      }
-
-      .tourist-detail {
+      .tourist-tag {
+        border: px2rem(1px) solid #888;
+        color: #888;
+        padding: 0 px2rem(10px);
         margin-left: px2rem(20px);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        align-items: flex-start;
-        text-align: left;
-
-        .tourist-tag {
-          border: px2rem(1px) solid #888;
-          color: #888;
-          padding: 0 px2rem(10px);
-          margin-left: px2rem(20px);
-          font-size: px2rem(28px);
-          border-radius: px2rem(10px);
-        }
-
-        .tourist-idCard {
-          font-size: px2rem(28px);
-          color: #888;
-          margin-top: px2rem(20px);
-        }
+        font-size: px2rem(28px);
+        border-radius: px2rem(10px);
       }
-    }
 
-    .addTourist {
-      background-color: #fff;
-      padding: px2rem(20px);
-      margin: 0 px2rem(20px) px2rem(20px) px2rem(20px);
-      text-align: center;
-      border-radius: px2rem(10px);
-
-      .icon-jia {
-        color: green;
-        font-size: px2rem(32px);
-        font-weight: 800;
-        margin-right: px2rem(30px);
+      .tourist-idCard {
+        font-size: px2rem(28px);
+        color: #888;
+        margin-top: px2rem(20px);
       }
     }
   }
 
-  .pay-button {
-    background-color: #3D11EE;
-    color: #fff;
-    font-size: px2rem(32px);
-    width: 86%;
-    border-radius: px2rem(10px);
-    margin: px2rem(20px) 7% px2rem(120px) 7%;
-    padding: px2rem(25px) 0;
+  .addTourist {
+    background-color: #fff;
+    padding: px2rem(20px);
+    margin: 0 px2rem(20px) px2rem(20px) px2rem(20px);
     text-align: center;
-  }
-
-  .parking-time {
-    margin-left: 12% !important;
-    color: #323233 !important;
-  }
-
-  .confirm-button {
-    background-color: #3D11EE;
-    color: #fff;
-    font-size: px2rem(32px);
-    width: 86%;
     border-radius: px2rem(10px);
-    margin: px2rem(120px) 7%;
-    padding: px2rem(15px) 0;
-    text-align: center;
-  }
-  .cellEdit{
-    padding: px2rem(10px);
-    margin-top:px2rem(20px) ;
-  }
 
-  .van-popup--center{
-    width: px2rem(550px);
+    .icon-jia {
+      color: green;
+      font-size: px2rem(32px);
+      font-weight: 800;
+      margin-right: px2rem(30px);
+    }
   }
+}
+
+.pay-button {
+  background-color: #3d11ee;
+  color: #fff;
+  font-size: px2rem(32px);
+  width: 86%;
+  border-radius: px2rem(10px);
+  margin: px2rem(20px) 7% px2rem(120px) 7%;
+  padding: px2rem(25px) 0;
+  text-align: center;
+}
+
+.parking-time {
+  margin-left: 12% !important;
+  color: #323233 !important;
+}
+
+.confirm-button {
+  background-color: #3d11ee;
+  color: #fff;
+  font-size: px2rem(32px);
+  width: 86%;
+  border-radius: px2rem(10px);
+  margin: px2rem(120px) 7%;
+  padding: px2rem(15px) 0;
+  text-align: center;
+}
+.cellEdit {
+  padding: px2rem(10px);
+  margin-top: px2rem(20px);
+}
+
+.van-popup--center {
+  width: px2rem(550px);
+}
 </style>

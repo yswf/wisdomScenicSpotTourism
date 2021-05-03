@@ -23,6 +23,11 @@
           parkingEndTime
         }}</span></van-cell
       >
+      <van-cell is-link @click="showPopup('area')"
+        >停车区域<span class="parking-time" id="parking-time">{{
+          area
+        }}</span></van-cell
+      >
     </van-cell-group>
 
     <van-popup v-model="showSelectPopup" position="bottom">
@@ -38,6 +43,14 @@
         :max-date="maxDate"
         :max-hour="maxHour"
         :min-hour="minHour"
+      />
+    </van-popup>
+    <van-popup v-model="showPicker" round position="bottom">
+      <van-picker
+        show-toolbar
+        :columns="columns"
+        @cancel="showPicker = false"
+        @confirm="onConfirm"
       />
     </van-popup>
     <div class="appoint-button" @click="appoint">确认预约</div>
@@ -69,7 +82,10 @@ export default {
       minDate: new Date(),
       maxHour: 21,
       minHour: 7,
-      currentDate: new Date()
+      currentDate: new Date(),
+      area: '',
+      showPicker: false,
+      columns: ['A', 'B', 'C', 'D']
     }
   },
   computed: {
@@ -92,10 +108,13 @@ export default {
         this.startTime = 2
         this.title = '请选择停车时间'
         this.type = 'time'
-      } else {
+      } else if (value == 'endTime') {
         this.startTime = 3
-        this.title = '请选择停车时间'
+        this.title = '请选择结束时间'
         this.type = 'time'
+      } else {
+        this.showPicker = true
+        return
       }
       this.showSelectPopup = true
     },
@@ -114,6 +133,11 @@ export default {
       } else {
         this.parkingEndTime = this.currentSelectDate == '' ? '7:00' : this.currentSelectDate
       }
+    },
+    // 确认区域
+    onConfirm (value) {
+      this.area = value
+      this.showPicker = false
     },
     // 取消选择
     cancelSelect () {
@@ -150,14 +174,23 @@ export default {
         Toast('停车结束时间不能为空')
         return
       }
+      if (isNoValue(this.area)) {
+        Toast('停车结束区域不能为空')
+        return
+      }
       var params = {
         carNum: this.carNum,
         parkingStartTime: this.parkingDate + ' ' + this.parkingStartTime,
-        parkingEndTime: this.parkingDate + ' ' + this.parkingEndTime
+        parkingEndTime: this.parkingDate + ' ' + this.parkingEndTime,
+        area: this.columns.indexOf(this.area) + 1,
+        uTel: sessionStorage.getItem('userTel')
       }
       parking(params, 'post').then(res => {
         if (res.code == '200') { // 预约成功
           Toast('预约成功，可前往个人中心查看停车信息')
+          this.$router.push({
+            path: '/userCenter'
+          })
         } else { // 该车对应时间段已预约
           Toast('该车对应时间段已预约')
         }

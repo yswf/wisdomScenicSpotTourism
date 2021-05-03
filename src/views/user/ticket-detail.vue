@@ -1,22 +1,41 @@
 <template>
-    <div id="ticketDetail">
-        <van-cell-group>
-            <van-cell title="门票名称" :value="item.title" icon="coupon-o" />
-            <van-cell title="门票日期" :value="item.date" icon="notes-o" />
-            <van-cell title="门票价格" :value="'￥'+item.price" icon="balance-o" />
-            <van-cell title="门票数量" :value="item.num +'张'" icon="paid" />
-            <van-cell title="门票类型" :value="item.ticketType | ticketTypeFilter" icon="browsing-history-o" />
-            <van-cell title="门票详情" :label="item.desc" icon="comment-o" />
-        </van-cell-group>
-        <div class="qrCode">
-            <div class="qrCodeTip">请出示此二维码给检票员</div>
-            <img class="qrCodeImg" />
-        </div>
+  <div id="ticketDetail">
+    <van-cell-group>
+      <van-cell title="门票名称" :value="item.title" icon="coupon-o" />
+      <van-cell title="门票日期" :value="item.selectPlayDate" icon="notes-o" />
+      <van-cell
+        title="门票价格"
+        :value="'￥' + item.ticketPay"
+        icon="balance-o"
+      />
+      <van-cell title="门票数量" :value="item.number + '张'" icon="paid" />
+      <van-cell
+        title="门票类型"
+        :value="item.ticketType | ticketTypeFilter"
+        icon="browsing-history-o"
+      />
+      <van-cell title="门票详情" :label="item.desc" icon="comment-o" />
+    </van-cell-group>
+    <div class="qrCode">
+      <div class="qrCodeTip">请出示此二维码给检票员</div>
+      <!-- <img class="qrCodeImg" /> -->
+      <vue-qr
+        class="qrCodeImg"
+        :logoScale="20"
+        :text="JSON.stringify(item)"
+        :margin="0"
+        :dotScale="1"
+      ></vue-qr>
     </div>
+  </div>
 </template>
 <script>
+import vueQr from 'vue-qr'
 export default {
   name: 'ticketDetail',
+  components: {
+    vueQr
+  },
   data () {
     return {
       item: {}
@@ -40,48 +59,44 @@ export default {
   watch: {
 
   },
-  components: {
-
-  },
   methods: {
 
   },
   mounted () {
-    this.item = this.$route.query.item
+    this.item = this.$route.query
     console.log(this.item)
   }
 }
 </script>
 
 <style lang="scss" scope>
-    .van-cell {
-        padding: px2rem(20px);
-        font-size: px2rem(30px);
-        line-height: px2rem(45px);
+.van-cell {
+  padding: px2rem(20px);
+  font-size: px2rem(30px);
+  line-height: px2rem(45px);
 
-        &__left-icon{
-            font-size:px2rem(40px);
-        }
+  &__left-icon {
+    font-size: px2rem(40px);
+  }
 
-        &__title {
-            margin: 0 px2rem(-150px) 0 0;
-        }
+  &__title {
+    margin: 0 px2rem(-150px) 0 0;
+  }
 
-        &__label {
-            font-size: px2rem(30px);
-            line-height: px2rem(45px);
-        }
-    }
-    .qrCode{
-        margin:px2rem(50px) px2rem(150px);
-        .qrCodeTip{
-
-        }
-        .qrCodeImg{
-           height:px2rem(400px);
-           width: px2rem(400px);
-           margin-top: px2rem(40px);
-           border:1px solid green;
-        }
-    }
+  &__label {
+    font-size: px2rem(30px);
+    line-height: px2rem(45px);
+  }
+}
+.qrCode {
+  margin: px2rem(50px) px2rem(150px);
+  .qrCodeTip {
+  }
+  .qrCodeImg {
+    height: px2rem(400px);
+    width: px2rem(400px);
+    margin-top: px2rem(40px);
+    border: 1px solid green;
+  }
+}
 </style>
