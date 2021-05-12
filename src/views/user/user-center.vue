@@ -265,6 +265,7 @@ export default {
     },
     loginOut () {
       sessionStorage.removeItem('userTel')
+      sessionStorage.removeItem('token')
       this.$router.push({
         path: '/login'
       })

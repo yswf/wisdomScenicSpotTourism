@@ -8,7 +8,11 @@
       <span class="ticket-select">{{ ticketInfo.selectTicketType }}</span>
     </div>
     <van-collapse v-model="ticketType" accordion>
-      <van-collapse-item v-for="item in ticketList" :name="item.id">
+      <van-collapse-item
+        v-for="item in ticketList"
+        :name="item.id"
+        :key="item.id"
+      >
         <div slot="title">
           {{ item.title }}
           <span class="ticket-price">￥{{ item.price }}</span>
@@ -44,7 +48,11 @@
       <span class="ticket-select">{{ touristList.length }}</span>
     </div>
     <div class="tourist-list">
-      <div class="tourist-info" v-for="tourist in touristList">
+      <div
+        class="tourist-info"
+        v-for="tourist in touristList"
+        :key="tourist.idCard"
+      >
         <div style="display: flex">
           <div @click="editTourist(tourist)">
             <span class="icon iconfont operator">&#xe626;</span>
@@ -52,11 +60,31 @@
           <div class="tourist-detail">
             <div>
               <span class="tourist-name">{{ tourist.name }}</span>
-              <!-- <span class="tourist-tag" v-if="tourist.ticketType==0">普通票</span>
-              <span class="tourist-tag" v-if="tourist.ticketType==1">儿童票</span>
-              <span class="tourist-tag" v-if="tourist.ticketType==2">学生票</span>
-              <span class="tourist-tag" v-if="tourist.ticketType==3">老人票</span>
-              <span class="tourist-tag" v-if="tourist.ticketType==4">残疾票</span> -->
+              <span
+                class="tourist-tag"
+                v-if="tourist.ticketType == '1617605816802'"
+                >普通票</span
+              >
+              <span
+                class="tourist-tag"
+                v-if="tourist.ticketType == '1617605937235'"
+                >儿童票</span
+              >
+              <span
+                class="tourist-tag"
+                v-if="tourist.ticketType == '1617605961717'"
+                >学生票</span
+              >
+              <span
+                class="tourist-tag"
+                v-if="tourist.ticketType == '1617606068771'"
+                >老人票</span
+              >
+              <span
+                class="tourist-tag"
+                v-if="tourist.ticketType == '1617606402019'"
+                >残疾票</span
+              >
             </div>
             <div class="tourist-idCard">
               {{ tourist.idCard | idCardFilter }}
@@ -162,16 +190,16 @@ export default {
       var sum = 0 // 总价
       var unitPrice = 0 // 单价
       for (var i = 0; i < this.ticketList.length; i++) {
-        if (this.ticketInfo.selectTicketType == this.ticketList[i].title) {
+        if (this.ticketInfo.selectTicketType === this.ticketList[i].title) {
           unitPrice = this.ticketList[i].price
-          break
+          // break
         }
       }
       for (var j = 0; j < this.touristList.length; j++) {
         var price = unitPrice
-        if (this.touristList[j].ticketType != '0') {
-          price = unitPrice / 2
-        }
+        // if (this.touristList[j].ticketType !== '0') {
+        //   price = unitPrice / 2
+        // }
         sum += Number(price)
       }
       return sum
@@ -203,7 +231,7 @@ export default {
     getTicketData () {
       this.ticketList = []
       tickets({}, 'get').then(res => {
-        if (res.length != 0) {
+        if (res.length !== 0) {
           var obj = {}
           for (let i = 0; i < res.length; i++) {
             obj = {
@@ -217,9 +245,9 @@ export default {
         } else {
           this.$message.success(res.msg)
         }
-      }).catch(err => {
+      }).catch(() => {
         console.log(22)
-        this.$message.success('获取失败' || res.msg)
+        this.$message.success('获取失败')
       })
     },
     // 选择购票类型
@@ -247,7 +275,7 @@ export default {
       var day = d.getDate() < 10 ? '0' + d.getDate() : d.getDate()
       var today = year + '-' + month + '-' + day
       this.showSelectPopup = false
-      this.ticketInfo.selectPlayDate = this.currentPlayDate == '' ? today : this.currentPlayDate
+      this.ticketInfo.selectPlayDate = this.currentPlayDate === '' ? today : this.currentPlayDate
     },
     // 取消选择
     cancelSelect () {
@@ -264,7 +292,7 @@ export default {
       this.isEdit = true
       console.log('编辑')
       this.touristList.forEach((item, index) => {
-        if (item.idCard == tourist.idCard) {
+        if (item.idCard === tourist.idCard) {
           this.touristList.splice(index, 1)
           index++
         }
@@ -277,9 +305,9 @@ export default {
         title: '温馨提示',
         message: '确定删除该游客信息？'
       }).then(() => {
-        var index = 0
+        // var index = 0
         this.touristList.forEach((item, index) => {
-          if (item.idCard == tourist.idCard) {
+          if (item.idCard === tourist.idCard) {
             this.touristList.splice(index, 1)
             index++
           }
@@ -298,7 +326,7 @@ export default {
         Toast('游玩日期不能为空')
         return
       }
-      if (this.ticketInfo.touristsNumber == 0) {
+      if (this.ticketInfo.touristsNumber === 0) {
         Toast('游玩人数不能为0')
         return
       }
@@ -308,11 +336,12 @@ export default {
         number: Number(this.ticketInfo.touristsNumber),
         ticketPay: this.ticketPay,
         uTel: this.userTel,
-        ticketId: this.ticketInfo.ticketId
+        // ticketId: this.ticketInfo.ticketId,
+        peoples: this.touristList
       }
       console.log(params)
       buy(params, 'post').then(res => {
-        if (res.code == '200') { // 购票成功
+        if (res.code === '200') { // 购票成功
           Toast('购票成功，可前往个人中心查看购票信息')
           this.$router.push({
             path: '/userCenter'
@@ -320,8 +349,8 @@ export default {
         } else { // 该车对应时间段已购票
           Toast('您已预约对应时间段')
         }
-      }).catch(err => {
-        Toast('登录失败' || res.msg)
+      }).catch(() => {
+        Toast('登录失败')
       })
       Toast.success('支付成功')
     },
@@ -330,7 +359,7 @@ export default {
       var tourist = {
         name: this.name,
         idCard: this.idCard,
-        ticketType: 0
+        ticketType: this.ticketInfo.ticketId
       }
       if (isNoValue(tourist.name)) {
         Toast('姓名不能为空')
