@@ -33,7 +33,7 @@
           :key="index"
           :num="item.number"
           :price="item.ticketPay"
-          :title="item.title"
+          :title="item.idName"
           :thumb="item.image"
           @click="showTicketDetail('ticket', item)"
         >
@@ -141,8 +141,8 @@ export default {
         }
         this.getParkingList()
         this.getTicketList()
-      }).catch(err => {
-        Toast('获取个人信息失败' || res.msg)
+      }).catch(() => {
+        Toast('获取个人信息失败')
       })
     } else {
       this.isLogin = false
@@ -183,7 +183,7 @@ export default {
       parkingSelect({
         tel: this.userTel
       }, 'get').then(res => {
-        if (res.length != 0) {
+        if (res.length !== 0) {
           var obj = {}
           for (let i = 0; i < res.length; i++) {
             obj = {
@@ -200,18 +200,19 @@ export default {
           }
           console.log(this.parkingList)
         }
-      }).catch(err => {
-        Toast('获取我的停车失败' || res.msg)
+      }).catch(() => {
+        Toast('获取我的停车失败')
       })
     },
     getTicketList () {
       buyList({
         tel: this.userTel
       }, 'get').then(res => {
-        if (res.length != 0) {
+        if (res.length !== 0) {
           for (let i = 0; i < res.length; i++) {
             var obj = {}
             obj = {
+              idName: res[i].idName,
               selectPlayDate: this.timestampToTime(res[i].selectPlayDate),
               number: res[i].number,
               ticketId: res[i].ticketId,
@@ -223,8 +224,8 @@ export default {
           }
           this.getTicketDetail()
         }
-      }).catch(err => {
-        Toast('获取我的门票失败' || res.msg)
+      }).catch(() => {
+        Toast('获取我的门票失败')
       })
     },
     getTicketDetail () {
@@ -232,9 +233,10 @@ export default {
         findTicketById({
           ticketId: item.ticketId
         }, 'get').then(result => {
-          this.ticketList[index].title = result[0].title,
-            this.ticketList[index].descs = result[0].descs
-        }).catch(error => {
+          console.log(item)
+          this.ticketList[index].title = result[0].title
+          this.ticketList[index].descs = result[0].descs
+        }).catch(() => {
           Toast('获取电子门票信息失败')
         })
       })
@@ -242,9 +244,9 @@ export default {
     },
     showTicketDetail (type, item) {
       console.log('点击跳转')
-      console.log(item)
-      if (item.status != '1') return
-      if (type == 'ticket') {
+      console.log(item.status)
+      if (item.status !== 1) return
+      if (type === 'ticket') {
         this.$router.push({
           path: '/userCenter/ticketDetail',
           query: item

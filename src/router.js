@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// 引入公共路由
+// 引入公共路由
 import {
   user,
   introduction,
@@ -26,11 +26,11 @@ const router = new VueRouter({
   ]
 })
 
-// 路由拦截
+// 路由拦截
 router.beforeEach((to, from, next) => {
-  // 设置全局标题
+  // 设置全局标题
   document.title = to.meta.title || '导游导览系统'
-  var userTel = sessionStorage.getItem('userTel')
+  const userTel = sessionStorage.getItem('userTel')
   console.log(userTel)
   if (to.meta.isRequireAuth) { // 判断该路由是否需要登录权限
     if (userTel) {

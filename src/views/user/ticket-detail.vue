@@ -1,7 +1,7 @@
 <template>
   <div id="ticketDetail">
     <van-cell-group>
-      <van-cell title="门票名称" :value="item.title" icon="coupon-o" />
+      <van-cell title="门票名称" :value="item.idName" icon="coupon-o" />
       <van-cell title="门票日期" :value="item.selectPlayDate" icon="notes-o" />
       <van-cell
         title="门票价格"
@@ -11,10 +11,10 @@
       <van-cell title="门票数量" :value="item.number + '张'" icon="paid" />
       <van-cell
         title="门票类型"
-        :value="item.ticketType | ticketTypeFilter"
+        :value="item.title || '默认'"
         icon="browsing-history-o"
       />
-      <van-cell title="门票详情" :label="item.desc" icon="comment-o" />
+      <van-cell title="门票详情" :label="item.descs" icon="comment-o" />
     </van-cell-group>
     <div class="qrCode">
       <div class="qrCodeTip">请出示此二维码给检票员</div>
