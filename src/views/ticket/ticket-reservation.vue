@@ -171,7 +171,8 @@ export default {
         touristsNumber: '',
         ticketPay: '',
         uTel: '',
-        selectTicketType: ''
+        selectTicketType: '',
+        itemMoney: ''
       },
       name: '',
       idCard: '',
@@ -254,6 +255,7 @@ export default {
     select (item) {
       this.ticketInfo.ticketId = item.id
       this.ticketInfo.selectTicketType = item.title
+      this.ticketInfo.itemMoney = item.price
       this.ticketType = ''
     },
     // 弹出选择器
@@ -333,11 +335,9 @@ export default {
       console.log(this.ticketInfo)
       var params = {
         selectPlayDate: this.ticketInfo.selectPlayDate,
-        number: Number(this.ticketInfo.touristsNumber),
-        ticketPay: this.ticketPay,
         uTel: this.userTel,
         // ticketId: this.ticketInfo.ticketId,
-        peoples: this.touristList
+        peoples: JSON.stringify(this.touristList)
       }
       console.log(params)
       buy(params, 'post').then(res => {
@@ -359,7 +359,9 @@ export default {
       var tourist = {
         name: this.name,
         idCard: this.idCard,
-        ticketType: this.ticketInfo.ticketId
+        ticketType: this.ticketInfo.ticketId,
+        money: this.ticketInfo.itemMoney,
+        selectPlayDate: this.ticketInfo.selectPlayDate
       }
       if (isNoValue(tourist.name)) {
         Toast('姓名不能为空')

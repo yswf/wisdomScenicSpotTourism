@@ -1,8 +1,5 @@
 import axios from 'axios'
 import qs from 'qs'
-import {
-  getCookie
-} from './utils.js'
 
 const ajaxBaseUrl = 'https://api.yswf.xyz/api/scenic'
 // const ajaxBaseUrl = 'http://localhost:3000/api/scenic'
